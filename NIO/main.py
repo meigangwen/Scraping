@@ -4,6 +4,7 @@ import re
 
 
 if __name__ == '__main__':
+    #url = 'https://www.nio.cn/charger-map'
     url = 'https://chargermap.nio.com/pe/h5/static/chargermap?channel=official'
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)  #this waiting method does not work sometimes
