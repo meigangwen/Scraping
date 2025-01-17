@@ -1,25 +1,24 @@
 from bs4 import BeautifulSoup
-from selenium import webdriver
+import requests
 import re
 
 
 if __name__ == '__main__':
-    url = 'https://chargermap.nio.com/pe/h5/static/chargermap?channel=official'
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(10)  #this waiting method does not work sometimes
-    driver.get(url)
+    url = 'https://chargermap-fe-gateway.nio.com/pe/bff/gateway/powermap/h5/charge-map/v2/power/around/summary?app_ver=5.2.0&client=pc&container=brower&lang=zh&region=CN&app_id=100119&channel=official&brand=nio&area_code=000000&longitude=104.32311750545072&latitude=37.98802757150653&type=region&timestamp=1737093018072'
+    response = requests.get(url)
+    print(response)
 
-    html_content = driver.page_source
-    soup = BeautifulSoup(html_content, 'lxml')
+    try:
+        data = response.json()  # This method parses the JSON string from the response
+        print(data)  # Print or use the data as needed
+    except ValueError:
+        print("Response content is not valid JSON")
 
-    # Realtime data of battery exchanges
-    static_data = soup.find_all(class_='clearfix-IjPJw')
-    data_string = ''
-    for elem in static_data:
-        data_string += elem.text
-        print(elem.text)
-    print(data_string)
 
+
+
+
+    '''
     # Define a dictionary of patterns
     patterns = {
         "实时累计换电次数": r"实时累计换电次数([\d,]+)",
@@ -42,3 +41,4 @@ if __name__ == '__main__':
     for key, value in results.items():
         print(f"{key}: {value}")
     driver.quit()
+    '''
